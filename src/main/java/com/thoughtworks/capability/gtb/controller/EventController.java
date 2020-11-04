@@ -1,5 +1,7 @@
 package com.thoughtworks.capability.gtb.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.capability.gtb.vo.EventType;
 import com.thoughtworks.capability.gtb.vo.EventVo;
 import com.thoughtworks.capability.gtb.vo.UserVo;
@@ -17,9 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class EventController {
 
   @GetMapping("/events/{id}")
-  public EventVo getEventById(@PathVariable("id") String id) {
+  public EventVo getEventById(@PathVariable("id") String id) throws JsonProcessingException {
     UserVo user = new UserVo("3", "张三");
-    return new EventVo(id, "下载文件", EventType.DOWNLOAD, new Date(), user);
+    EventVo eventVo = new EventVo(id, "下载文件", EventType.DOWNLOAD, new Date(), user);
+    ObjectMapper objectMapper = new ObjectMapper();
+    String valueAsString = objectMapper.writeValueAsString(eventVo);
+    System.out.println(valueAsString);
+    return eventVo;
   }
 
   @PostMapping("/events")
