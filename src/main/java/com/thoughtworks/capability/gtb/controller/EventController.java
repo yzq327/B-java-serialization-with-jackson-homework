@@ -30,10 +30,5 @@ public class EventController {
   @PostMapping("/events")
   public void createEvent(@RequestBody EventVo event) throws JsonProcessingException {
     log.info("create event: {}", event);
-    ObjectMapper objectMapper = new ObjectMapper();
-    String valueAsString = objectMapper.writeValueAsString(event);
-    EventVo eventVo = objectMapper.readValue(valueAsString, EventVo.class);
-    System.out.println(eventVo);
-
   }
 }
