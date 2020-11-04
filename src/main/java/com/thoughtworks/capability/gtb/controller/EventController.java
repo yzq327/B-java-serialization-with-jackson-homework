@@ -24,12 +24,16 @@ public class EventController {
     EventVo eventVo = new EventVo(id, "下载文件", EventType.DOWNLOAD, new Date(), user);
     ObjectMapper objectMapper = new ObjectMapper();
     String valueAsString = objectMapper.writeValueAsString(eventVo);
-    System.out.println(valueAsString);
     return eventVo;
   }
 
   @PostMapping("/events")
-  public void createEvent(@RequestBody EventVo event) {
+  public void createEvent(@RequestBody EventVo event) throws JsonProcessingException {
     log.info("create event: {}", event);
+    ObjectMapper objectMapper = new ObjectMapper();
+    String valueAsString = objectMapper.writeValueAsString(event);
+    EventVo eventVo = objectMapper.readValue(valueAsString, EventVo.class);
+    System.out.println(eventVo);
+
   }
 }
